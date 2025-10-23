@@ -1,11 +1,11 @@
 " Vim auto-load script
 " Author: Peter Odding <peter@peterodding.com>
 " Last Change: November 27, 2014
-" URL: http://peterodding.com/code/vim/notes/
 
-function! xolox#notes#parser#parse_note(text) " {{{1
+
+function! vnotes#notes#parser#parse_note(text) " {{{1
   " Parser for the note taking syntax used by vim-notes.
-  let starttime = xolox#misc#timer#start()
+  let starttime = vmisc#misc#timer#start()
   let context = s:create_parse_context(a:text)
   let note_title = context.next_line()
   let blocks = [{'type': 'title', 'text': note_title}]
@@ -43,14 +43,14 @@ function! xolox#notes#parser#parse_note(text) " {{{1
       call add(blocks, block)
     endif
   endwhile
-  call xolox#misc#timer#stop("notes.vim %s: Parsed note into %i blocks in %s.", g:xolox#notes#version, len(blocks), starttime)
+  call vmisc#misc#timer#stop("notes.vim %s: Parsed note into %i blocks in %s.", g:vnotes#notes#version, len(blocks), starttime)
   return blocks
 endfunction
 
-function! xolox#notes#parser#view_parse_nodes() " {{{1
+function! vnotes#notes#parser#view_parse_nodes() " {{{1
   " Parse the current note and show the parse nodes in a temporary buffer.
   let note_text = join(getline(1, '$'), "\n")
-  let parse_nodes = xolox#notes#parser#parse_note(note_text)
+  let parse_nodes = vnotes#notes#parser#parse_note(note_text)
   vnew
   call setline(1, map(parse_nodes, 'string(v:val)'))
   setlocal filetype=vim nomodified nowrap
@@ -157,7 +157,7 @@ function! s:parse_heading(context) " {{{1
     let level += 1
     call a:context.next(1)
   endwhile
-  let text = xolox#misc#str#trim(s:match_line(a:context))
+  let text = vmisc#misc#str#trim(s:match_line(a:context))
   return {'type': 'heading', 'level': level, 'text': text}
 endfunction
 
@@ -252,7 +252,7 @@ endfunction
 function! s:save_item(items, lines, indent)
   let text = join(a:lines, "\n")
   if text =~ '\S'
-    let text = xolox#misc#str#compact(text)
+    let text = vmisc#misc#str#compact(text)
     call add(a:items, {'text': text, 'indent': a:indent})
   endif
 endfunction
@@ -282,7 +282,7 @@ function! s:parse_paragraph(context) " {{{1
   " Don't include empty paragraphs in the output.
   let text = join(lines, "\n")
   if text =~ '\S'
-    return {'type': 'paragraph', 'text': xolox#misc#str#compact(text)}
+    return {'type': 'paragraph', 'text': vmisc#misc#str#compact(text)}
   else
     return {}
   endif
@@ -292,7 +292,7 @@ function! s:generate_list_item_bullet_pattern() " {{{1
   " Generate a regular expression that matches any kind of list bullet.
   let choices = copy(g:notes_unicode_bullets)
   for bullet in g:notes_ascii_bullets
-    call add(choices, xolox#misc#escape#pattern(bullet))
+    call add(choices, vmisc#misc#escape#pattern(bullet))
   endfor
   call add(choices, '\d\+[[:punct:]]\?')
   return join(choices, '\|')
@@ -300,39 +300,39 @@ endfunction
 
 let s:bullet_pattern = '^\s*\(' . s:generate_list_item_bullet_pattern() . '\)\s\+'
 
-function! xolox#notes#parser#run_tests() " {{{1
+function! vnotes#notes#parser#run_tests() " {{{1
   " Tests for the note taking syntax parser.
-  call xolox#misc#test#reset()
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_note_titles')
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_headings')
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_paragraphs')
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_code_blocks')
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_list_items')
-  call xolox#misc#test#wrap('xolox#notes#parser#test_parsing_of_block_quotes')
-  call xolox#misc#test#summarize()
+  call vmisc#misc#test#reset()
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_note_titles')
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_headings')
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_paragraphs')
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_code_blocks')
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_list_items')
+  call vmisc#misc#test#wrap('vnotes#notes#parser#test_parsing_of_block_quotes')
+  call vmisc#misc#test#summarize()
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_note_titles()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}], xolox#notes#parser#parse_note('Just the title'))
+function! vnotes#notes#parser#test_parsing_of_note_titles()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}], vnotes#notes#parser#parse_note('Just the title'))
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_headings()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'heading', 'level': 1, 'text': 'This is a heading'}], xolox#notes#parser#parse_note("Just the title\n\n# This is a heading"))
+function! vnotes#notes#parser#test_parsing_of_headings()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'heading', 'level': 1, 'text': 'This is a heading'}], vnotes#notes#parser#parse_note("Just the title\n\n# This is a heading"))
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_paragraphs()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'paragraph', 'text': 'This is a paragraph'}], xolox#notes#parser#parse_note("Just the title\n\nThis is a paragraph"))
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'paragraph', 'text': 'This is a paragraph'}, {'type': 'paragraph', 'text': "And here's another paragraph!"}], xolox#notes#parser#parse_note("Just the title\n\nThis is a paragraph\n\n\n\nAnd here's another paragraph!"))
+function! vnotes#notes#parser#test_parsing_of_paragraphs()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'paragraph', 'text': 'This is a paragraph'}], vnotes#notes#parser#parse_note("Just the title\n\nThis is a paragraph"))
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'paragraph', 'text': 'This is a paragraph'}, {'type': 'paragraph', 'text': "And here's another paragraph!"}], vnotes#notes#parser#parse_note("Just the title\n\nThis is a paragraph\n\n\n\nAnd here's another paragraph!"))
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_code_blocks()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'code', 'language': '', 'text': "This is a code block\nwith two lines"}], xolox#notes#parser#parse_note("Just the title\n\n{{{ This is a code block\nwith two lines }}}"))
+function! vnotes#notes#parser#test_parsing_of_code_blocks()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'code', 'language': '', 'text': "This is a code block\nwith two lines"}], vnotes#notes#parser#parse_note("Just the title\n\n{{{ This is a code block\nwith two lines }}}"))
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_list_items()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'list', 'ordered': 1, 'items': [{'indent': 0, 'text': 'item one'}, {'indent': 0, 'text': 'item two'}, {'indent': 0, 'text': 'item three'}]}], xolox#notes#parser#parse_note("Just the title\n\n1. item one\n2. item two\n3. item three"))
+function! vnotes#notes#parser#test_parsing_of_list_items()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'list', 'ordered': 1, 'items': [{'indent': 0, 'text': 'item one'}, {'indent': 0, 'text': 'item two'}, {'indent': 0, 'text': 'item three'}]}], vnotes#notes#parser#parse_note("Just the title\n\n1. item one\n2. item two\n3. item three"))
 endfunction
 
-function! xolox#notes#parser#test_parsing_of_block_quotes()
-  call xolox#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'block-quote', 'lines': [{'level': 1, 'text': 'block'}, {'level': 2, 'text': 'quoted'}, {'level': 1, 'text': 'text'}]}], xolox#notes#parser#parse_note("Just the title\n\n> block\n>> quoted\n> text"))
+function! vnotes#notes#parser#test_parsing_of_block_quotes()
+  call vmisc#misc#test#assert_equals([{'type': 'title', 'text': 'Just the title'}, {'type': 'block-quote', 'lines': [{'level': 1, 'text': 'block'}, {'level': 2, 'text': 'quoted'}, {'level': 1, 'text': 'text'}]}], vnotes#notes#parser#parse_note("Just the title\n\n> block\n>> quoted\n> text"))
 endfunction

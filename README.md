@@ -150,7 +150,7 @@ By default the stars that mark bold text are hidden when your version of Vim sup
 
 By default URL schemes (text fragments like `http://`) are hidden when your version of Vim supports concealing of text. By setting this option to zero you stop vim-notes from hiding URL schemes. In the following example, the `https://` text would be visible in the editor when this option is set to zero:
 
-    You can find the vim-notes plug-in at https://github.com/xolox/vim-notes.
+    You can find the vim-notes plug-in at https://github.com/vnotes/vim-notes.
 
 ## Commands
 
@@ -378,7 +378,7 @@ This is not a complete solution (there are more types of commit messages that th
 
 ## Contact
 
-If you have questions, bug reports, suggestions, etc. the author can be contacted at <peter@peterodding.com>. The latest version is available at <http://peterodding.com/code/vim/notes/> and <http://github.com/xolox/vim-notes>. If you like the script please vote for it on [Vim Online] [vim_online].
+If you have questions, bug reports, suggestions, etc. the author can be contacted at <peter@peterodding.com>. The latest version is available at <http://peterodding.com/code/vim/notes/> and <http://github.com/vnotes/vim-notes>. If you like the script please vote for it on [Vim Online] [vim_online].
 
 ## License
 
@@ -391,12 +391,12 @@ This software is licensed under the [MIT license] [mit].
 [edit]: http://vimdoc.sourceforge.net/htmldoc/editing.html#:edit
 [enc]: http://vimdoc.sourceforge.net/htmldoc/options.html#'encoding'
 [filetype.vim]: https://code.google.com/p/vim/source/browse/runtime/filetype.vim?r=fbc1131f0ba5be4ec74fb2ccdfb3559b446a2b1e#778
-[folding]: https://raw.githubusercontent.com/xolox/vim-notes/master/screenshots/folding.png
+[folding]: https://raw.githubusercontent.com/vnotes/vim-notes/master/screenshots/folding.png
 [geshi]: http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
 [gf]: http://vimdoc.sourceforge.net/htmldoc/editing.html#gf
 [gfm]: https://help.github.com/articles/github-flavored-markdown/
 [highlight]: http://vimdoc.sourceforge.net/htmldoc/syntax.html#:highlight
-[install-notes]: https://github.com/xolox/vim-notes/blob/master/INSTALL.md
+[install-notes]: https://github.com/vnotes/vim-notes/blob/master/INSTALL.md
 [levenshtein]: http://en.wikipedia.org/wiki/Levenshtein_distance
 [mapleader]: http://vimdoc.sourceforge.net/htmldoc/map.html#mapleader
 [markdown]: http://en.wikipedia.org/wiki/Markdown

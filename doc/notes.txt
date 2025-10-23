@@ -374,7 +374,7 @@ version of Vim supports concealing of text. By setting this option to zero you
 stop vim-notes from hiding URL schemes. In the following example, the
 'https://' text would be visible in the editor when this option is set to zero:
 >
-  You can find the vim-notes plug-in at https://github.com/xolox/vim-notes.
+  You can find the vim-notes plug-in at https://github.com/vnotes/vim-notes.
 <
 ===============================================================================
                                                                *notes-commands*
@@ -758,7 +758,7 @@ Contact ~
 
 If you have questions, bug reports, suggestions, etc. the author can be
 contacted at peter@peterodding.com. The latest version is available at
-http://peterodding.com/code/vim/notes/ and http://github.com/xolox/vim-notes.
+http://peterodding.com/code/vim/notes/ and http://github.com/vnotes/vim-notes.
 If you like the script please vote for it on Vim Online [18].
 
 ===============================================================================
@@ -775,12 +775,12 @@ References ~
 [1] http://en.wikipedia.org/wiki/Levenshtein_distance
 [2] http://python.org/
 [3] http://en.wikipedia.org/wiki/Markdown
-[4] https://raw.githubusercontent.com/xolox/vim-notes/master/screenshots/folding.png
+[4] https://raw.githubusercontent.com/vnotes/vim-notes/master/screenshots/folding.png
 [5] https://help.github.com/articles/github-flavored-markdown/
 [6] http://code.google.com/p/vim/source/browse/runtime/colors/slate.vim
 [7] http://en.wikipedia.org/wiki/Monaco_(typeface)
 [8] http://peterodding.com/code/vim/notes/syntax.png
-[9] https://github.com/xolox/vim-notes/blob/master/INSTALL.md
+[9] https://github.com/vnotes/vim-notes/blob/master/INSTALL.md
 [10] http://www.vim.org/scripts/script.php?script_id=2332
 [11] https://www.mediawiki.org/wiki/MediaWiki
 [12] http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi

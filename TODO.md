@@ -10,6 +10,6 @@
  * When renaming a note, also update references to the note in other notes? (make this optional of course!)
  * Improve highlighting of lines below a line with a `DONE` marker; when navigating over such lines, the highlighting will sometimes disappear (except on the first line). See also [issue #2 on GitHub] [issue_2].
 
-[issue_2]: https://github.com/xolox/vim-notes/issues/2
-[issue_10]: https://github.com/xolox/vim-notes/issues/10
+[issue_2]: https://github.com/vnotes/vim-notes/issues/2
+[issue_10]: https://github.com/vnotes/vim-notes/issues/10
 [matchpairs]: http://vimdoc.sourceforge.net/htmldoc/options.html#%27matchpairs%27

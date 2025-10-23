@@ -1,7 +1,7 @@
 ﻿" Vim syntax script
 " Author: Peter Odding <peter@peterodding.com>
 " Last Change: March 15, 2015
-" URL: http://peterodding.com/code/vim/notes/
+
 
 " Note: This file is encoded in UTF-8 including a byte order mark so
 " that Vim loads the script using the right encoding transparently.
@@ -16,7 +16,7 @@ endif
 " Ideally we'd find a way to get accurate syntax highlighting without the
 " nasty performance implications, but for now I'll accept the performance
 " impact in order to have accurate highlighting. For more discussion please
-" refer to https://github.com/xolox/vim-notes/issues/2.
+" refer to https://github.com/vnotes/vim-notes/issues/2.
 syntax sync fromstart
 
 " Check for spelling errors in all text.
@@ -31,7 +31,7 @@ syntax cluster notesInline contains=notesName
 highlight def link notesHiddenMarker Ignore
 
 " Highlight note names as hyperlinks. {{{2
-call xolox#notes#highlight_names(1)
+call vnotes#notes#highlight_names(1)
 syntax cluster notesInline add=notesName
 highlight def link notesName Underlined
 
@@ -40,13 +40,13 @@ syntax match notesTagName /\(^\|\s\)\@<=@\k\+/
 highlight def link notesTagName Underlined
 
 " Highlight list bullets and numbers. {{{2
-execute 'syntax match notesListBullet /' . escape(xolox#notes#leading_bullet_pattern(), '/') . '/'
+execute 'syntax match notesListBullet /' . escape(vnotes#notes#leading_bullet_pattern(), '/') . '/'
 highlight def link notesListBullet Comment
 syntax match notesListNumber /^\s*\zs\d\+[[:punct:]]\?\ze\s/
 highlight def link notesListNumber Comment
 
 " Highlight quoted fragments. {{{2
-if xolox#notes#unicode_enabled()
+if vnotes#notes#unicode_enabled()
   syntax match notesDoubleQuoted /\w\@<!“.\{-}”\w\@!/
   syntax match notesSingleQuoted /\w\@<!‘.\{-}’\w\@!/
 else
@@ -57,7 +57,7 @@ highlight def link notesSingleQuoted Special
 highlight def link notesDoubleQuoted String
 
 " Highlight inline code fragments (same as Markdown syntax). {{{2
-if has('conceal') && xolox#misc#option#get('notes_conceal_code', 1)
+if has('conceal') && vmisc#misc#option#get('notes_conceal_code', 1)
   syntax region notesInlineCode matchgroup=notesInlineCodeMarker start=/`/ end=/`/ concealends
   highlight link notesItalicMarker notesInlineCodeMarker
 else
@@ -67,7 +67,7 @@ syntax cluster notesInline add=notesInlineCode
 highlight def link notesInlineCode Special
 
 " Highlight text emphasized in italic font. {{{2
-if has('conceal') && xolox#misc#option#get('notes_conceal_italic', 1)
+if has('conceal') && vmisc#misc#option#get('notes_conceal_italic', 1)
   syntax region notesItalic matchgroup=notesItalicMarker start=/\<_\k\@=/ end=/_\>\|\n/ contains=@Spell concealends
   highlight link notesItalicMarker notesHiddenMarker
 else
@@ -77,7 +77,7 @@ syntax cluster notesInline add=notesItalic
 highlight notesItalic gui=italic cterm=italic
 
 " Highlight text emphasized in bold font. {{{2
-if has('conceal') && xolox#misc#option#get('notes_conceal_bold', 1)
+if has('conceal') && vmisc#misc#option#get('notes_conceal_bold', 1)
   syntax region notesBold matchgroup=notesBoldMarker start=/\*\k\@=/ end=/\S\@<=\*/ contains=@Spell concealends
   highlight link notesBoldMarker notesHiddenMarker
 else
@@ -94,10 +94,10 @@ highlight notesSubtleURL gui=underline guifg=fg
 syntax match notesTextURL @\<www\.\(\S*\w\)\+/\?@
 syntax cluster notesInline add=notesTextURL
 highlight def link notesTextURL notesSubtleURL
-execute printf('syntax match notesRealURL @%s@', g:xolox#notes#url_pattern)
+execute printf('syntax match notesRealURL @%s@', g:vnotes#notes#url_pattern)
 syntax cluster notesInline add=notesRealURL
 highlight def link notesRealURL notesSubtleURL
-if has('conceal') && xolox#misc#option#get('notes_conceal_url', 1)
+if has('conceal') && vmisc#misc#option#get('notes_conceal_url', 1)
   syntax match notesUrlScheme @\(mailto:\|javascript:\|\w\{3,}://\)@ contained containedin=notesRealURL conceal
   highlight def link notesUrlScheme notesRealURL
 endif
@@ -164,7 +164,7 @@ syntax match notesCodeStart /{{[{]\w*/
 syntax match notesCodeEnd /}}[}]/
 highlight def link notesCodeStart Ignore
 highlight def link notesCodeEnd Ignore
-call xolox#notes#highlight_sources(1)
+call vnotes#notes#highlight_sources(1)
 
 " Hide mode line at end of file. {{{2
 syntax match notesModeLine /\_^vim:.*\_s*\%$/
